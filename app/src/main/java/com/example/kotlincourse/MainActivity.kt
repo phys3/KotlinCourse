@@ -3,28 +3,25 @@ package com.example.kotlincourse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlincourse.ui.theme.KotlinCourseTheme
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +31,9 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.Red
                 ) {
-                    GreetingImage(message = "Happy Birthday Damjan!", from = "From Katharina")
+                    BasicScreen()
                 }
             }
         }
@@ -44,51 +41,78 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingImage(message: String, from: String) {
-    val image = painterResource(R.drawable.androidparty)
-    Box {
-        Image(
-            painter = image,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            alpha = 0.5F,
+fun Quadrant(text1: String, text2: String, bgColor: Color, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .background(color = bgColor)
+            .padding(16.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = text1,
+            textAlign = TextAlign.Center,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .padding(0.dp, 16.dp),
+            fontWeight = FontWeight.Bold,
         )
-        GreetingText(message = message, from = from,  modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp))
+        Text(
+            text = text2,
+            textAlign = TextAlign.Justify
+        )
     }
 }
 
 @Composable
-fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier.padding(8.dp)
-    ) {
-        Text(
-            text = message,
-            fontSize = 90.sp,
-            lineHeight = 116.sp,
-            textAlign = TextAlign.Center,
+fun BasicScreen() {
+    Column(Modifier.fillMaxWidth()) {
+        Row(
             modifier = Modifier
-                .padding(8.dp)
-        )
-        Text(
-            text = from,
-            fontSize = 36.sp,
+                .background(Color.White)
+                .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Quadrant(
+                text1 = "Text composable",
+                text2 = "Displays text and follows the recommended Material Design guidelines.",
+                bgColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+            Quadrant(
+                text1 = "Text composable",
+                text2 = "Displays text and follows the recommended Material Design guidelines.",
+                bgColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Row(
             modifier = Modifier
-                .padding(16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-                .background(color = Color.Green)
-        )
+                .background(Color.White)
+                .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Quadrant(
+                text1 = "Text composable",
+                text2 = "Displays text and follows the recommended Material Design guidelines.",
+                bgColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+            Quadrant(
+                text1 = "Text composable",
+                text2 = "Displays text and follows the recommended Material Design guidelines.",
+                bgColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 
 @Preview(showBackground = false)
 @Composable
-fun BirthdayCardPreview() {
+fun ScreenPreview() {
     KotlinCourseTheme {
-        GreetingImage(stringResource(R.string.happy_birthday_text),
-            stringResource(R.string.signature_text))
+        BasicScreen()
     }
 }
